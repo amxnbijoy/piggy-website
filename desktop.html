@@ -4,6 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Piggy</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyDXo1DL9HaE8H_ukN4Bf6h8Thqq5qzp8ww",
+  authDomain: "piggy-website-bd488.firebaseapp.com",
+  projectId: "piggy-website-bd488",
+  storageBucket: "piggy-website-bd488.firebasestorage.app",
+  messagingSenderId: "156695948222",
+  appId: "1:156695948222:web:814efbe343a586f379a7ef",
+  measurementId: "G-TFDPE2D61N"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
   <style>
     :root {
       --white: #ffffff;
@@ -330,30 +349,29 @@
       <h2>piggy</h2>
       <p>Your personal savings app</p>
       <div style="text-align: center; margin-top: 2rem;">
-        <form action="https://formspree.io/f/xvgayrav" method="POST">
-  <input type="email" name="email" required placeholder="Enter your email"
-    style="padding: 1rem; font-size: 1rem; width: 60%; max-width: 400px; border-radius: 0.5rem; border: 1.5px solid var(--black);">
-  <button class="register-btn">Register</button>
-</form>
-<div id="thankYouPopup" style="
-  display: none;
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--pink);
-  color: var(--black);
-  padding: 2rem 3rem;
-  border: 2px solid var(--black);
-  border-radius: 1rem;
-  font-size: 1.2rem;
-  z-index: 1000;
-  text-align: center;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-">
-  🎉 Thank you for registering! Stay tuned for the launch!
-</div>
-
+        <form id="registration-form">
+          <input type="email" id="emailInput" required placeholder="Enter your email"
+            style="padding: 1rem; font-size: 1rem; width: 60%; max-width: 400px; border-radius: 0.5rem; border: 1.5px solid var(--black);">
+          <button class="register-btn" type="submit">Register</button>
+        </form>
+        <div id="thankYouPopup" style="
+          display: none;
+          position: fixed;
+          top: 30%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: var(--pink);
+          color: var(--black);
+          padding: 2rem 3rem;
+          border: 2px solid var(--black);
+          border-radius: 1rem;
+          font-size: 1.2rem;
+          z-index: 1000;
+          text-align: center;
+          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        ">
+          🎉 Thank you for registering! Stay tuned for the launch!
+        </div>
       </div>
     </div>
     <div class="right">
@@ -415,30 +433,11 @@
     <div id="timer" class="countdown-timer">Loading...</div>
 
     <div style="text-align: center; margin-top: 2rem;">
-      <form action="https://formspree.io/f/xvgayrav" method="POST">
-  <input type="email" name="email" required placeholder="Enter your email"
-    style="padding: 1rem; font-size: 1rem; width: 60%; max-width: 400px; border-radius: 0.5rem; border: 1.5px solid var(--black);">
-  <button class="register-btn">Register</button>
-</form>
-<div id="thankYouPopup" style="
-  display: none;
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--pink);
-  color: var(--black);
-  padding: 2rem 3rem;
-  border: 2px solid var(--black);
-  border-radius: 1rem;
-  font-size: 1.2rem;
-  z-index: 1000;
-  text-align: center;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-">
-  🎉 Thank you for registering! Stay tuned for the launch!
-</div>
-
+      <form id="registration-form-2">
+        <input type="email" id="emailInput2" required placeholder="Enter your email"
+          style="padding: 1rem; font-size: 1rem; width: 60%; max-width: 400px; border-radius: 0.5rem; border: 1.5px solid var(--black);">
+        <button class="register-btn" type="submit">Register</button>
+      </form>
     </div>
   </section>
 
@@ -469,6 +468,34 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+
+const registerForms = [
+      { formId: "registration-form", emailId: "emailInput" },
+      { formId: "registration-form-2", emailId: "emailInput2" }
+    ];
+
+    registerForms.forEach(({ formId, emailId }) => {
+      const form = document.getElementById(formId);
+      const emailInput = document.getElementById(emailId);
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const email = emailInput.value;
+        try {
+          await db.collection("registrations").add({
+            email: email,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          document.getElementById("thankYouPopup").style.display = "block";
+          setTimeout(() => {
+            document.getElementById("thankYouPopup").style.display = "none";
+          }, 4000);
+          form.reset();
+        } catch (error) {
+          alert("❌ Submission failed. Please try again later.");
+          console.error("Firebase error:", error);
+        }
+      });
+    });
   </script>
 
 </body>
