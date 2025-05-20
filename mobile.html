@@ -155,6 +155,15 @@
     border-radius: 1rem;
   }
 
+.responsive-mockup {
+  width: 100vw;        /* Match viewport width exactly */
+  height: auto;        /* Maintain aspect ratio */
+  max-width: 100%;     /* Never exceed container width */
+  display: block;
+  border-radius: 1rem;
+}
+
+
     /* Responsive collapsible navbar */
     @media (max-width: 768px) {
       .nav-toggle {
@@ -223,9 +232,14 @@
     <p>Set goals. Save consistently. Unlock rewards.</p>
   </section>
 
-  <section class="container">
-    <img src="multimockups.png" alt="Screenshots" />
-  </section>
+ <section class="container">
+  <picture>
+    <source srcset="multimockverti.png" media="(max-width: 768px)">
+    <img src="multimockups.png" alt="Screenshots" class="responsive-mockup" />
+  </picture>
+</section>
+
+
 
   <section id="countdown" class="container">
     <h3 class="h3">Launching Soon</h3>
@@ -248,7 +262,7 @@
       nav.classList.toggle('open');
     }
 
-    const releaseDate = new Date("2025-08-01T00:00:00").getTime();
+    const releaseDate = new Date("2025-07-07T00:00:00").getTime();
     const timerElement = document.getElementById("timer");
 
     function updateCountdown() {
