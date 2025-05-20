@@ -183,6 +183,45 @@
       }
     }
   </style>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXo1DL9HaE8H_ukN4Bf6h8Thqq5qzp8ww",
+    authDomain: "piggy-website-bd488.firebaseapp.com",
+    projectId: "piggy-website-bd488",
+    storageBucket: "piggy-website-bd488.firebasestorage.app",
+    messagingSenderId: "156695948222",
+    appId: "1:156695948222:web:814efbe343a586f379a7ef",
+    measurementId: "G-TFDPE2D61N"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.submitForm = async function(event) {
+    event.preventDefault();
+    const emailInput = event.target.querySelector('input[type="email"]');
+    const email = emailInput.value;
+
+    try {
+      await addDoc(collection(db, "registrations"), {
+        email: email,
+        timestamp: serverTimestamp()
+      });
+      alert("Thanks for registering!");
+      emailInput.value = '';
+    } catch (error) {
+      console.error("Error saving to Firestore:", error);
+      alert("There was an error. Please try again later.");
+    }
+  }
+</script>
+
+
+
 </head>
 <body>
 
@@ -205,11 +244,12 @@
   <main class="container pink-section">
     <h2>piggy</h2>
     <p>Your personal savings app</p>
-    <form action="https://formspree.io/f/xvgayrav" method="POST">
-      <input type="email" name="email" required placeholder="Enter your email" />
-      <br>
-      <button class="register-btn">Register</button>
-    </form>
+    <form onsubmit="submitForm(event)">
+  <input type="email" id="emailInput1" required placeholder="Enter your email" />
+  <br>
+  <button type="submit" class="register-btn">Register</button>
+</form>
+
     <img src="mockup.png" alt="Piggy App Preview" />
   </main>
 
@@ -245,11 +285,12 @@
     <h3 class="h3">Launching Soon</h3>
     <p>Pre-register and get a reward when we launch!</p>
     <div id="timer" class="countdown-timer">Loading...</div>
-    <form action="https://formspree.io/f/xvgayrav" method="POST">
-      <input type="email" name="email" required placeholder="Enter your email" />
-      <br>
-      <button class="register-btn">Register</button>
-    </form>
+    <form onsubmit="submitForm(event)">
+  <input type="email" id="emailInput2" required placeholder="Enter your email" />
+  <br>
+  <button type="submit" class="register-btn">Register</button>
+</form>
+
   </section>
 
   <footer>
@@ -285,5 +326,26 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
+
+<script>
+  async function submitForm(event) {
+    event.preventDefault();
+    const email = event.target.querySelector('input[type="email"]').value;
+
+    try {
+      await db.collection("registrations").add({
+        email: email,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      alert("Thanks for registering!");
+      event.target.reset();
+    } catch (error) {
+      console.error("Error saving to Firestore:", error);
+      alert("There was an error. Please try again later.");
+    }
+  }
+</script>
+
+
 </body>
 </html>
