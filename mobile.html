@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Piggy</title>
+  <style>
+    :root {
+      --white: #ffffff;
+      --pink: #ffe9fb;
+      --red: #c7003a;
+      --black: #000000;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background: var(--black);
+      color: var(--white);
+      width: 100%;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-toggle {
+      display: none;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .announcement-bar {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      padding: 0.75rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--red);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 120px;
+      margin: 1rem 0;
+    }
+
+    p {
+      font-size: 25px;
+      margin: 1rem 0;
+    }
+
+    img, video {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 1rem;
+      margin: 1rem 0;
+    }
+
+    form {
+      margin: 1rem 0;
+    }
+
+    input[type="email"] {
+      padding: 0.75rem;
+      width: 90%;
+      max-width: 400px;
+      border: 1.5px solid var(--black);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .register-btn {
+      padding: 0.75rem 2rem;
+      background-color: var(--red);
+      color: var(--white);
+      font-weight: bold;
+      font-size: 1rem;
+      border: 1.5px solid var(--black);
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    .register-btn:hover {
+  background-color: #000000; /* Darker red */
+  color: var(--white);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+    .countdown-timer {
+      font-size: 60px;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    footer {
+      background-color: var(--black);
+      color: var(--pink);
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .h3 {
+        font-size: 60px;
+        font-weight: bold;
+        color: var(--red);
+        margin: 1rem 0;
+    }
+
+    .pink-section {
+    background-color: var(--pink);
+    border-radius: 1rem;
+  }
+
+    /* Responsive collapsible navbar */
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        background: var(--black);
+        padding: 1rem 0;
+      }
+
+      nav.open {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 style="font-family: 'Times New Roman', Times, serif;">piggy</h1>
+    <div class="nav-toggle" onclick="toggleNav()">☰</div>
+    <nav id="nav">
+      <a href="#">Home</a>
+      <a href="#intro">About</a>
+      <a href="#features">Features</a>
+      <a href="#countdown">Launch</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="announcement-bar">
+    🎉 Register now and get exclusive launch rewards! 🚀
+  </div>
+
+  <main class="container pink-section">
+    <h2>piggy</h2>
+    <p>Your personal savings app</p>
+    <form action="https://formspree.io/f/xvgayrav" method="POST">
+      <input type="email" name="email" required placeholder="Enter your email" />
+      <br>
+      <button class="register-btn">Register</button>
+    </form>
+    <img src="mockup.png" alt="Piggy App Preview" />
+  </main>
+
+  <section id="intro" class="container">
+    <h2>Why piggy?</h2>
+    <img src="penny.png" alt="Piggy Penny Image" />
+    <p>
+      We all try to save up for things that matter... but life (and impulse spending) often gets in the way.
+      <strong class="highlight-red">Piggy helps you stay on track by locking your savings goals in.</strong>
+    </p>
+  </section>
+
+  <section id="features" class="container pink-section">
+    <h2>How it works</h2>
+    <img src="piggybank.png" alt="Piggy Bank Image" />
+    <video controls>
+      <source src="piggy-demo.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <p>Set goals. Save consistently. Unlock rewards.</p>
+  </section>
+
+  <section class="container">
+    <img src="multimockups.png" alt="Screenshots" />
+  </section>
+
+  <section id="countdown" class="container">
+    <h3 class="h3">Launching Soon</h3>
+    <p>Pre-register and get a reward when we launch!</p>
+    <div id="timer" class="countdown-timer">Loading...</div>
+    <form action="https://formspree.io/f/xvgayrav" method="POST">
+      <input type="email" name="email" required placeholder="Enter your email" />
+      <br>
+      <button class="register-btn">Register</button>
+    </form>
+  </section>
+
+  <footer>
+    © 2025 Piggy. All rights reserved.
+  </footer>
+
+  <script>
+    function toggleNav() {
+      const nav = document.getElementById('nav');
+      nav.classList.toggle('open');
+    }
+
+    const releaseDate = new Date("2025-08-01T00:00:00").getTime();
+    const timerElement = document.getElementById("timer");
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = releaseDate - now;
+
+      if (distance <= 0) {
+        timerElement.innerText = "Launched!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timerElement.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
